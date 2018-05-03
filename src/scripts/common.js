@@ -291,6 +291,7 @@ var togglbutton = {
       var selected = projectAutocomplete.getSelected(),
         billable = !!document.querySelector(".tb-billable.tb-checked:not(.no-billable)"),
         request = {
+          // TODO: or here
           type: "update",
           description: $("#toggl-button-description").value,
           pid: selected.pid,
@@ -440,6 +441,7 @@ var togglbutton = {
         };
       } else {
         activate();
+        // TODO: we need a start- and end- timer specification here
         opts = {
           type: 'timeEntry',
           respond: true,
@@ -453,6 +455,9 @@ var togglbutton = {
         };
       }
       togglbutton.element = e.target;
+      // TODO: from chrome docs: message, sender as a response function? 
+      // weirdly only 2 params
+      // 
       chrome.runtime.sendMessage(opts, togglbutton.addEditForm);
 
       return false;

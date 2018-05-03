@@ -385,6 +385,9 @@ var TogglButton = {
   },
 
   createTimeEntry: function (timeEntry, sendResponse) {
+    // TODO: a-hah! here the start time seems to be defined as a date
+    // the other params should still be encapsulated in the timeEntry param
+    // they could be sent from the google-calendar content script
     var project, start = new Date(),
       error = "",
       defaultProject = Db.getDefaultProject(),
@@ -410,7 +413,8 @@ var TogglButton = {
 
     entry = {
       start: start.toISOString(),
-      stop: null,
+      stop: null, // TODO: we have something here! apparently wee need iso strings, easy enough
+                  // just two dates as parameters
       duration: -parseInt((start.getTime() / 1000), 10),
       description: timeEntry.description || "",
       pid: timeEntry.pid || timeEntry.projectId || null,

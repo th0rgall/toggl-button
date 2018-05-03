@@ -70,11 +70,30 @@ function insertButtonModern(bubblecontent, description) {
 }
 
 // Popup view Google Calendar Modern
+
+/*
+
+Data chips ==> selector for the pop-up view in general
+
+exept for some div structure navigation, there are no easy attribute selectors for date and or start time or end time
+while less clean, it should be more efficient (no api call)
+and even less work
+
+there is a data-eventid attr in a div in the popup
+
+*/
+
 togglbutton.render('div[data-chips-dialog="true"]', {observe: true}, function (elem) {
   if ($('.toggl-button', elem)) {
     return;
   }
+
+  // this selector grabs the title of the event from the pop-up view
   var title = $('span[role="heading"]', elem), target = elem, description;
+
+  // won't do anything without a title or description found
+  // title is used to place it on top of that, no actual toggl parameter
+
   if (title) {
     description = title.textContent;
     target = title.parentElement.previousSibling;
