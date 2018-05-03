@@ -388,7 +388,10 @@ var TogglButton = {
     // TODO: a-hah! here the start time seems to be defined as a date
     // the other params should still be encapsulated in the timeEntry param
     // they could be sent from the google-calendar content script
-    var project, start = new Date(),
+    var start = timeEntry.startDate || new Date();
+    var stop = timEntry.stopDate || null;
+
+    var project,
       error = "",
       defaultProject = Db.getDefaultProject(),
       rememberProjectPer = Db.get('rememberProjectPer'),
@@ -413,8 +416,7 @@ var TogglButton = {
 
     entry = {
       start: start.toISOString(),
-      stop: null, // TODO: we have something here! apparently wee need iso strings, easy enough
-                  // just two dates as parameters
+      stop: stop ? stop.toISOString() : stop, 
       duration: -parseInt((start.getTime() / 1000), 10),
       description: timeEntry.description || "",
       pid: timeEntry.pid || timeEntry.projectId || null,

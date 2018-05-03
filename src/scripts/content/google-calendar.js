@@ -61,12 +61,59 @@ observer.observe($('body'), { childList: true, subtree: true });
 
 //Google Calendar Modern
 
-function insertButtonModern(bubblecontent, description) {
+function insertButtonModern(bubblecontent, description, startDate, stopDate) {
   var link = togglbutton.createTimerLink({
     className: 'google-calendar-modern',
-    description: description
+    description: description,
+    startDate: startDate,
+    stopDate: stopDate
   });
   bubblecontent.appendChild(link);
+}
+
+
+// @param titleElement: the span element that represent the title from the popup view
+// @return object of the form {startDate, endDate}
+function getDates(titleElement) {
+  // navigate up
+  let topHalf = heading.parentElement.parentElement.parentElement;
+  let bottomHalf = topHalf.nextSibling;
+  // navigate down
+  let timeInfo = bottomhalf.firstChild;
+  let timeContainer = timeInfo.children[1]; // TODO: make this null-resistent
+  let dateContainer = timeContainer.firstChild
+
+  // extracts: 
+  /*
+  0: "Friday, 4 May08:00 – 10:30"   --> source string
+  1: "Friday"
+  2: "4"
+  3: "May"
+  4: "08:00"
+  5: "10:30"
+  */
+  let dateTokens = /(\w+), (\d) (\w+)(\d\d:\d\d) – (\d\d:\d\d)/.exec(dateContainer.textContent);
+
+  // TODO: support crazy events like: 'Sat, 21 April, 21:30 – Sun, 22 April, 05:00' (copied from web page directly)
+
+  let monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  let startDate = new Date(
+      (new Date()).getFullYear() , // current year
+      monthNames.indexOf(dateTokens[3]), // month from the tokens
+      dateTokens[2], // day
+      dateTokens[4].substring(0,2), // hours
+      dateTokens[4].substring(3,5), // minutes
+    );
+
+  let stopDate = new Date(
+    (new Date()).getFullYear() , // current year
+    monthNames.indexOf(dateTokens[3]), // month from the tokens
+    dateTokens[2], // day
+    dateTokens[5].substring(0,2), // hours
+    dateTokens[5].substring(3,5), // minutes
+  );
+
+  return {startDate, stopDate};
 }
 
 // Popup view Google Calendar Modern
@@ -94,11 +141,22 @@ togglbutton.render('div[data-chips-dialog="true"]', {observe: true}, function (e
   // won't do anything without a title or description found
   // title is used to place it on top of that, no actual toggl parameter
 
+  let dates = getDates(title);
+  let startDate = dates.startDate, stopDate = dates.stopDate;
+
   if (title) {
     description = title.textContent;
     target = title.parentElement.previousSibling;
   }
   if (description) {
+    if (startDate) {
+      if (stopDate) {
+        insertButtonModern(target, description, startDate, stopDate);
+        return;
+      }
+      insertButtonModern(target, description, startDate);
+      return;
+    }
     insertButtonModern(target, description);
   }
 });
