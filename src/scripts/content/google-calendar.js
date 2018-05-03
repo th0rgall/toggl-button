@@ -76,10 +76,10 @@ function insertButtonModern(bubblecontent, description, startDate, stopDate) {
 // @return object of the form {startDate, endDate}
 function getDates(titleElement) {
   // navigate up
-  let topHalf = heading.parentElement.parentElement.parentElement;
+  let topHalf = titleElement.parentElement.parentElement.parentElement;
   let bottomHalf = topHalf.nextSibling;
   // navigate down
-  let timeInfo = bottomhalf.firstChild;
+  let timeInfo = bottomHalf.firstChild;
   let timeContainer = timeInfo.children[1]; // TODO: make this null-resistent
   let dateContainer = timeContainer.firstChild
 

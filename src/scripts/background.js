@@ -388,8 +388,8 @@ var TogglButton = {
     // TODO: a-hah! here the start time seems to be defined as a date
     // the other params should still be encapsulated in the timeEntry param
     // they could be sent from the google-calendar content script
-    var start = timeEntry.startDate || new Date();
-    var stop = timEntry.stopDate || null;
+    var start = timeEntry.start ? new Date(timeEntry.start) : new Date();
+    var stop = timeEntry.stop ? new Date(timeEntry.stop) : null;
 
     var project,
       error = "",
@@ -417,7 +417,13 @@ var TogglButton = {
     entry = {
       start: start.toISOString(),
       stop: stop ? stop.toISOString() : stop, 
-      duration: -parseInt((start.getTime() / 1000), 10),
+      // duration: time entry duration in seconds. If the time entry is currently running, the duration attribute contains a negative value, 
+      // denoting the start of the time entry in seconds since epoch (Jan 1 1970). The correct duration can be calculated as current_time + duration, 
+      // where current_time is the current time in seconds since epoch. (integer, required)
+      duration: (start && stop) ? 
+        ((stop.getTime() - start.getTime()) !== 0 ? (stop.getTime() - start.getTime()) / 1000 : 1)
+        : 
+        -parseInt((start.getTime() / 1000), 10),
       description: timeEntry.description || "",
       pid: timeEntry.pid || timeEntry.projectId || null,
       tid: timeEntry.tid || null,

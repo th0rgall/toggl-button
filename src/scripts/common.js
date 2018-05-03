@@ -447,6 +447,8 @@ var togglbutton = {
           respond: true,
           projectId: invokeIfFunction(params.projectId),
           description: invokeIfFunction(params.description),
+          start: invokeIfFunction(params.startDate.toISOString()),
+          stop: invokeIfFunction(params.stopDate.toISOString()),
           tags: invokeIfFunction(params.tags),
           projectName: invokeIfFunction(params.projectName),
           createdWith: togglbutton.fullVersion + "-" + togglbutton.serviceName,
