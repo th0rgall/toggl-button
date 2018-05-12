@@ -75,13 +75,24 @@ function insertButtonModern(bubblecontent, description, startDate, stopDate) {
 // @param titleElement: the span element that represent the title from the popup view
 // @return object of the form {startDate, endDate}
 function getDates(titleElement) {
-  // navigate up
-  let topHalf = titleElement.parentElement.parentElement.parentElement;
-  let bottomHalf = topHalf.nextSibling;
+
+  // function: if dependency exists, return the assignee, otherwise return null
+  // to avoid null dereferences
+  const dependOn = (dependency, assignee) => {
+    if (dependency) {
+      return assignee;
+    } else {
+      return null;
+    }
+  }
+
+  let topHalf = dependOn(titleElement, titleElement.parentElement.parentElement.parentElement);
+  let bottomHalf = dependOn(topHalf, topHalf.nextSibling);
+
   // navigate down
-  let timeInfo = bottomHalf.firstChild;
-  let timeContainer = timeInfo.children[1]; // TODO: make this null-resistent
-  let dateContainer = timeContainer.firstChild
+  let timeInfo = dependOn(bottomHalf, bottomHalf.firstChild);
+  let timeContainer = dependOn(timeInfo, timeInfo.children[1]); // TODO: make this null-resistent
+  let dateContainer = dependOn(timeContainer, timeContainer.firstChild)
 
   // extracts: 
   /*
@@ -92,7 +103,7 @@ function getDates(titleElement) {
   4: "08:00"
   5: "10:30"
   */
-  let dateTokens = /(\w+), (\d) (\w+)(\d\d:\d\d) – (\d\d:\d\d)/.exec(dateContainer.textContent);
+  let dateTokens = /(\w+), (\d{1,2}) (\w+)(\d\d:\d\d) – (\d\d:\d\d)/.exec(dateContainer.textContent);
 
   // TODO: support crazy events like: 'Sat, 21 April, 21:30 – Sun, 22 April, 05:00' (copied from web page directly)
 
