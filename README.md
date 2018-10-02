@@ -1,9 +1,10 @@
 # Toggl Button extension for Chrome and Firefox
 
+[![Build Status](https://travis-ci.org/toggl/toggl-button.svg?branch=master)](https://travis-ci.org/toggl/toggl-button)
+
 Add Toggl one-click time tracking to popular web tools.
 
 ## Compatible services
-
 - [AgenoCRM](https://agenocrm.com/)
 - [Airtable](https://airtable.com)
 - [Any.do](http://www.any.do/)
@@ -17,6 +18,7 @@ Add Toggl one-click time tracking to popular web tools.
 - [Bitrix24](https://www.bitrix24.com/)
 - [Books](https://books.zoho.com/)
 - [Breeze](http://www.breeze.pm/)
+- [Bugherd](https://www.bugherd.com/)
 - [Bugzilla](https://bugzilla.mozilla.org/)
 - [CapsuleCRM](http://www.capsulecrm.com/)
 - [ClickUp](https://clickup.com/)
@@ -51,11 +53,13 @@ Add Toggl one-click time tracking to popular web tools.
 - [Google Keep](https://keep.google.com/)
 - [GQueues](https://www.gqueues.com/)
 - [Habitica](https://habitica.com)
+- [HEFLO](https://app.heflo.com/)
 - [Help Scout](http://www.helpscout.net/)
 - [Husky](https://www.huskymarketingplanner.com/)
 - [Intercom](https://www.intercom.com/)
 - [Jira](https://www.atlassian.com/software/jira)
 - [Kanbanery](https://www.kanbanery.com/)
+- [Kanboard](https://kanboard.org/)
 - [KhanAcademy](https://www.khanacademy.org/)
 - [LiquidPlanner](https://www.liquidplanner.com/)
 - [ManageEngine](https://www.manageengine.com/)
@@ -98,6 +102,7 @@ Add Toggl one-click time tracking to popular web tools.
 - [Teamleader](http://www.teamleader.eu/)
 - [TeamWeek](https://teamweek.com/)
 - [Teamwork](https://www.teamwork.com/)
+- [Teamwork Desk](https://www.teamwork.com/desk)
 - [TestRail](https://testrail.com)
 - [TickTick](https://ticktick.com/)
 - [Todoist](https://todoist.com/)
@@ -109,6 +114,7 @@ Add Toggl one-click time tracking to popular web tools.
 - [VersionOne](https://versionone.com/)
 - [Waffle](https://waffle.io/)
 - [WordPress](https://wordpress.com)
+- [Workast](https://workast.io)
 - [Workfront](https://www.workfront.com/)
 - [Worksection](http://worksection.com/)
 - [Wrike](https://www.wrike.com/)
@@ -117,6 +123,7 @@ Add Toggl one-click time tracking to popular web tools.
 - [YouTrack](http://www.jetbrains.com/youtrack/)
 - [Zendesk](https://www.zendesk.com/)
 - [Zube](https://zube.io/)
+- [VivifyScrum](https://www.vivifyscrum.com/)
 
 ## Installing from the Web Store/Addons page
 
@@ -128,12 +135,26 @@ https://addons.mozilla.org/en-US/firefox/addon/toggl-button-time-tracker/
 
 ## Installing from Source
 
-Works for Chrome only:
+- Clone the repository `git clone git@github.com:toggl/toggl-button.git`
+- Install Node.js and NPM https://nodejs.org/en/
+- Run `npm install`
+- Run `npm start`
 
-1.  Clone the repository: `git clone git://github.com/toggl/toggl-button`
-2.  Navigate to `chrome://extensions/` and enable "Developer Mode".
-3.  Choose "Load unpacked extension..."
-4.  Open the src directory in the toggl-button directory you just cloned and follow the prompts to install.
+Then depending on your browser, continue with the following steps.
+
+On Chrome:
+
+1.  Navigate to `chrome://extensions/` and enable "Developer Mode".
+2.  Choose "Load unpacked extension..."
+3.  Open the `dist/chrome/` directory
+
+On Firefox:
+
+1. Navigate to `about:debugging`
+2. Choose `Load Temporary Add-on`
+3. Select the `dist/firefox/manifest.json` file
+
+Note that in Firefox the add-on needs to be manually loaded again when the browser restarts.
 
 ## Changelog
 
@@ -141,19 +162,19 @@ List of all the changes and added features can be found at http://toggl.github.i
 
 ## Using the Button
 1. Log in to your [Toggl] account from the extension popup.
-2. Navigate to your [service](#compatible-services) and start your Toggl timer there
+2. Navigate to your [service](#compatible-services) and start your Toggl timer there.
 
 _See this article for reference where the start timer link is located in all the tools: [Where can I find the Button?]_
 
 Or start entry from the extension icon menu.
 
-3. To edit the running time entry
-  - Edit entry details from the post start popup that is shown right after you click the "Start timer" button
-  - Edit entry details from the extension icon menu by clicking the running time entry name
+3. To edit the running time entry:
+  - Edit entry details from the post start popup that is shown right after you click the "Start timer" button.
+  - Edit entry details from the extension icon menu by clicking the running time entry name.
 
 4. To stop the current running timer:
-  - Press the button again
-  - Stop the entry from the extension icon menu
+  - Press the button again.
+  - Stop the entry from the extension icon menu.
   - Start another time entry inside your account.
 
 ## Custom domains

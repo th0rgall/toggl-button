@@ -1,6 +1,80 @@
 {
   "versions": [
     {
+      "version": "1.11.1",
+      "rows": [
+        "Fix process is undefined in content script #1113",
+        "Fix Sentry support #1092",
+        "Fix Google Keep support #1082",
+        "Fix Intercom support #1015",
+        "Fix MeisterTask support #1093"
+      ]
+    },
+    {
+      "version": "1.11.0",
+      "rows": [
+        "Fix continuing time entries in list #1111",
+        "Fix API URL #1108",
+        "Update Help Scout integration #1094",
+        "Fix pomodoro view in Firefox #1074",
+        "Package updated to use webpack; please see README for development changes #1090",
+        "Add Office.com calendar Integration #1073",
+        "Update Phabricator integration #1022",
+        "Update YouTrack agile view #924",
+        "Fix Airtable integration #1013",
+        "Update JIRA support for the Kanaban Board #1067",
+        "Update MeisterTask integration #1072",
+        "Add VivifyScrum integration"
+      ]
+    },
+    {
+      "version": "1.10.9",
+      "rows": [
+        "Fix TickTick integration #1044"
+      ]
+    },
+    {
+      "version": "1.10.8",
+      "rows": [
+        "Fix issue where no default workspace was present",
+        "Update Slack integration",
+        "Fix JIRA integration",
+        "Fix Trello integration",
+        "Fix integration with teamwork project ui",
+        "Added Workast integration",
+        "Fix Visual Studio Integration",
+        "Update OpenProject integration to support version 7.4.6",
+        "Fix Asana integration",
+        "Add support for Bugherd"
+      ]
+    },
+    {
+      "version": "1.10.7",
+      "rows": [
+        "Add Bitbucket Server support",
+        "Fix Teamweek integration",
+        "Fix automatic project selection in JIRA Server",
+        "Trim description in Confluence",
+        "Handle users without workspaces",
+        "Make 'Recent entries' non clickable",
+        "Notify Toggl Webapp that Toggl Button is installed"
+      ]
+    },
+    {
+      "version": "1.10.6",
+      "rows": [
+        "Add keyboard support for project autocomplete",
+        "Add support for Teamwork Desk",
+        "Add support for Kanboard",
+        "Add support for HEFLO",
+        "Add Microsoft Todo integration",
+        "Fix Targetprocess integration",
+        "Fix CapsuleCRM integration",
+        "Fix project autoselect on Todoist",
+        "Fix user-agent request header"
+      ]
+    },
+    {
       "version": "1.10.5",
       "rows": [
         "Fix Asana integration again",
