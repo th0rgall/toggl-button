@@ -312,8 +312,8 @@ window.togglbutton = {
         ),
         request = {
           // TODO: or here
-          type: "update",
-          description: $("#toggl-button-description").value,
+          type: 'update',
+          description: $('#toggl-button-description').value,
           pid: selected.pid,
           projectName: selected.name,
           tags: tagAutocomplete.getSelected(),

@@ -438,8 +438,8 @@ window.TogglButton = {
 
     var project,
       error = '',
-      defaultProject = Db.getDefaultProject(),
-      rememberProjectPer = Db.get('rememberProjectPer'),
+      defaultProject = db.getDefaultProject(),
+      rememberProjectPer = db.get('rememberProjectPer'),
       entry;
     TogglButton.$curService = (timeEntry || {}).service;
     TogglButton.$curURL = (timeEntry || {}).url;
@@ -462,7 +462,6 @@ window.TogglButton = {
 
     entry = {
       start: start.toISOString(),
-<<<<<<< HEAD
       stop: stop ? stop.toISOString() : stop, 
       // duration: time entry duration in seconds. If the time entry is currently running, the duration attribute contains a negative value, 
       // denoting the start of the time entry in seconds since epoch (Jan 1 1970). The correct duration can be calculated as current_time + duration, 
@@ -471,12 +470,7 @@ window.TogglButton = {
         ((stop.getTime() - start.getTime()) !== 0 ? (stop.getTime() - start.getTime()) / 1000 : 1)
         : 
         -parseInt((start.getTime() / 1000), 10),
-      description: timeEntry.description || "",
-=======
-      stop: null,
-      duration: -parseInt(start.getTime() / 1000, 10),
       description: timeEntry.description || '',
->>>>>>> master
       pid: timeEntry.pid || timeEntry.projectId || null,
       tid: timeEntry.tid || null,
       wid: timeEntry.wid || TogglButton.$user.default_wid,
