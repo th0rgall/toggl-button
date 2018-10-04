@@ -9,7 +9,7 @@ function insertButton(bubblecontent, description) {
 }
 
 // Detail view
-togglbutton.render('.ep:not(.toggl)', { observe: true }, function(elem) {
+togglbutton.render('.ep:not(.toggl)', { observe: true }, function (elem) {
   var description, togglButtonElement;
 
   togglButtonElement = $('.ep-dpc', elem);
@@ -19,7 +19,7 @@ togglbutton.render('.ep:not(.toggl)', { observe: true }, function(elem) {
 });
 
 // Popup view
-togglbutton.render('.bubblecontent:not(.toggl)', { observe: true }, function(
+togglbutton.render('.bubblecontent:not(.toggl)', { observe: true }, function (
   elem
 ) {
   // Goal view
@@ -41,10 +41,10 @@ togglbutton.render('.bubblecontent:not(.toggl)', { observe: true }, function(
 
 // Popup view for Tasks
 // we subscribe here for DOM changes, so we could get tasks IFrames with description info
-var observer = new MutationObserver(function(mutations) {
-  mutations.filter(function(mutation) {
+var observer = new MutationObserver(function (mutations) {
+  mutations.filter(function (mutation) {
     //tasks iframes are only one without id or class
-    var iframe = Array.from(mutation.addedNodes.values()).find(function(node) {
+    var iframe = Array.from(mutation.addedNodes.values()).find(function (node) {
       return (
         node instanceof HTMLIFrameElement &&
         node.id.length === 0 &&
@@ -52,7 +52,7 @@ var observer = new MutationObserver(function(mutations) {
       );
     });
     if (iframe) {
-      iframe.onload = function() {
+      iframe.onload = function () {
         var taskname = $('.b', this.contentDocument),
           bubblecontent = this.parentElement.parentElement.parentElement; //got to .bubblecontent so button styles be the same
         if (bubblecontent.classList.contains('bubblecontent')) {
@@ -72,7 +72,8 @@ function insertButtonModern(bubblecontent, description, startDate, stopDate) {
     className: 'google-calendar-modern',
     description: description,
     startDate: startDate,
-    stopDate: stopDate
+    stopDate: stopDate,
+    buttonType: stopDate ? 'entry' : 'normal'
   });
   bubblecontent.appendChild(link);
 }
@@ -102,45 +103,45 @@ function getDates(titleElement) {
   var timeContainer = null;
   var dateContainer = null;
   if (
-    timeContainerWrap 
-      && timeContainerWrap[1] 
-        && timeContainerWrap[1].firstChild)
-        dateContainer = timeContainerWrap[1].firstChild;
+    timeContainerWrap
+    && timeContainerWrap[1]
+    && timeContainerWrap[1].firstChild)
+    dateContainer = timeContainerWrap[1].firstChild;
 
   if (dateContainer) {
-  // extracts: 
-  /*
-  0: "Friday, 4 May08:00 – 10:30"   --> source string
-  1: "Friday"
-  2: "4"
-  3: "May"
-  4: "08:00"
-  5: "10:30"
-  */
-  let dateTokens = /(\w+), (\d{1,2}) (\w+)(\d\d:\d\d) – (\d\d:\d\d)/.exec(dateContainer.textContent);
-  
+    // extracts: 
+    /*
+    0: "Friday, 4 May08:00 – 10:30"   --> source string
+    1: "Friday"
+    2: "4"
+    3: "May"
+    4: "08:00"
+    5: "10:30"
+    */
+    let dateTokens = /(\w+), (\d{1,2}) (\w+)(\d\d:\d\d) – (\d\d:\d\d)/.exec(dateContainer.textContent);
+
     // TODO: support crazy events like: 'Sat, 21 April, 21:30 – Sun, 22 April, 05:00' (copied from web page directly)
-  
+
     let monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     let startDate = new Date(
-        (new Date()).getFullYear() , // current year
-        monthNames.indexOf(dateTokens[3]), // month from the tokens
-        dateTokens[2], // day
-        dateTokens[4].substring(0,2), // hours
-        dateTokens[4].substring(3,5), // minutes
-      );
-  
-    let stopDate = new Date(
-      (new Date()).getFullYear() , // current year
+      (new Date()).getFullYear(), // current year
       monthNames.indexOf(dateTokens[3]), // month from the tokens
       dateTokens[2], // day
-      dateTokens[5].substring(0,2), // hours
-      dateTokens[5].substring(3,5), // minutes
+      dateTokens[4].substring(0, 2), // hours
+      dateTokens[4].substring(3, 5), // minutes
     );
-  
-    return {startDate, stopDate};
+
+    let stopDate = new Date(
+      (new Date()).getFullYear(), // current year
+      monthNames.indexOf(dateTokens[3]), // month from the tokens
+      dateTokens[2], // day
+      dateTokens[5].substring(0, 2), // hours
+      dateTokens[5].substring(3, 5), // minutes
+    );
+
+    return { startDate, stopDate };
   } else {
-    return {'startDate': null, 'stopDate': null};
+    return { 'startDate': null, 'stopDate': null };
   }
 
 }
@@ -158,7 +159,7 @@ there is a data-eventid attr in a div in the popup
 
 */
 
-togglbutton.render('div[data-chips-dialog="true"]', {observe: true}, function (elem) {
+togglbutton.render('div[data-chips-dialog="true"]', { observe: true }, function (elem) {
   if ($('.toggl-button', elem)) {
     return;
   }
@@ -179,14 +180,13 @@ togglbutton.render('div[data-chips-dialog="true"]', {observe: true}, function (e
     target = title.parentElement.previousSibling;
   }
   if (description) {
-    if (startDate) {
-      if (stopDate) {
+    // add one normal button
+    insertButtonModern(target, description);
+
+    // add one entry button
+    if (startDate && stopDate) {
         insertButtonModern(target, description, startDate, stopDate);
         return;
       }
-      insertButtonModern(target, description, startDate);
-      return;
-    }
-    insertButtonModern(target, description);
   }
 });

@@ -421,26 +421,33 @@ window.togglbutton = {
     if (!!params.calculateTotal) {
       togglbutton.mainDescription = invokeIfFunction(params.description);
     }
+    if (params.buttonType === 'entry') {
+      link.textContent = 'Add entry';
+      link.classList.add('entry');
+      }
+    
 
     function deactivate() {
       link.classList.remove('active');
       link.style.color = '';
-      if (params.buttonType !== 'minimal') {
+      if (params.buttonType !== 'minimal' && params.buttonType !== 'entry') {
         link.textContent = 'Start timer';
       }
     }
 
     function activate() {
-      var currentLink = link;
-      if (document.querySelector('.toggl-button.active')) {
-        link = document.querySelector('.toggl-button.active');
-        deactivate();
-        link = currentLink;
-      }
-      link.classList.add('active');
-      link.style.color = '#1ab351';
-      if (params.buttonType !== 'minimal') {
-        link.textContent = 'Stop timer';
+      if (params.buttonType !== 'entry') {
+        var currentLink = link;
+        if (document.querySelector('.toggl-button.active')) {
+          link = document.querySelector('.toggl-button.active');
+          deactivate();
+          link = currentLink;
+        }
+        link.classList.add('active');
+        link.style.color = '#1ab351';
+        if (params.buttonType !== 'minimal') {
+          link.textContent = 'Stop timer';
+        }
       }
     }
 
@@ -523,7 +530,8 @@ window.togglbutton = {
       color = '',
       link,
       i,
-      minimal;
+      minimal,
+      addEntry;
 
     if (togglbutton.links.length < 1) {
       return;
@@ -532,6 +540,7 @@ window.togglbutton = {
     for (i = 0; i < togglbutton.links.length; i++) {
       link = togglbutton.links[i].link;
       minimal = link.classList.contains('min');
+      addEntry = link.classList.contains('entry');
 
       if (
         !entry ||
@@ -539,10 +548,10 @@ window.togglbutton = {
           entry.description
       ) {
         link.classList.remove('active');
-        if (!minimal) {
+        if (!minimal && !addEntry) {
           linkText = 'Start timer';
         }
-      } else {
+      } else if (!addEntry) {
         link.classList.add('active');
         color = '#1ab351';
         if (!minimal) {

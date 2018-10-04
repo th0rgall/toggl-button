@@ -1,7 +1,7 @@
 {
   "applications": {
     "gecko": {
-      "id": "toggl-button@toggl.com",
+      "id": "toggl-button@thorgalle.me",
       "strict_min_version": "50.0"
     }
   },
